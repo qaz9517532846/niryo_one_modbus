@@ -19,7 +19,7 @@ def raw_data_to_number(val):
 
 if __name__ == '__main__':
     print "--- START"
-    client = ModbusTcpClient('localhost', port=5020)
+    client = ModbusTcpClient('169.254.200.200', port=5020)
 
     client.connect()
     print "Connected to modbus server"
@@ -66,9 +66,6 @@ if __name__ == '__main__':
     while client.read_holding_registers(150, count=1).registers[0] == 1:
         time.sleep(0.05)
    
-    # Activate learning mode
-    client.write_register(300, 1)
-
     client.close()
     print "Close connection to modbus server"
     print "--- END"
