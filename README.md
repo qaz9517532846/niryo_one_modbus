@@ -1,10 +1,12 @@
 # niryo_one_modbus
 Control niryo robot arm using Python in ROS. 
 
-# Niryo robot arm example code - test IO.
+Niryo robot arm example code - test IO.
+
 $ rosrun niryo_one_modbus client_modbus_test.py
 
-# Niryo robot arm example code - Comtrol motion(joint).
+Niryo robot arm example code - Comtrol motion(joint).
+
 $ rosrun niryo_one_modbus client_move_command.py
 
 # Niryo robot arm example code - Comtrol motion(world).
