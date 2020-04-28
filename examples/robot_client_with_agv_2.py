@@ -70,12 +70,12 @@ def Robot_motion():
     time.sleep(1)
 
     niryo_move_world(pos_x - 0.1, pos_y, pos_z, 0, 0, -pos_rz)
-
-    print "learning ON"
-    client.write_register(300,1)
-
+    
     # wait time
     time.sleep(1)
+    
+    print "learning ON"
+    client.write_register(300,1)
 
 def agv_niryo_service(req):
     if req.agv_command == 1:
