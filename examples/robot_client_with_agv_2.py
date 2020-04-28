@@ -6,8 +6,8 @@ import time
 
 from pymodbus.client.sync import ModbusTcpClient
 from std_msgs.msg import String
-from vision.srv import *
-from agv_scl.srv import *
+from cv_vision.srv import *
+from scl_agv.srv import *
 
 # Positive number : 0 - 32767
 # Negative number : 32768 - 65535
@@ -59,33 +59,43 @@ def robot_from_camera(camera_capcture):
         print "Service call faild: %s" %e
 
 def Robot_motion():
-    niryo_move_world(pos_x - 0.05, pos_y, pos_z, pos_rx, pos_ry, pos_rz)
+    niryo_move_world(pos_x - 0.1, pos_y, pos_z, 0, 0, -pos_rz)
     
     # wait time
     time.sleep(1)
 
-    niryo_move_world(pos_x, pos_y, pos_z, pos_rx, pos_ry, pos_rz)
+    niryo_move_world(pos_x, pos_y, pos_z, 0, 0, -pos_rz)
 
     # wait time
     time.sleep(1)
 
-    niryo_move_world(pos_x - 0.05, pos_y, pos_z, pos_rx, pos_ry, pos_rz)
+    niryo_move_world(pos_x - 0.1, pos_y, pos_z, 0, 0, -pos_rz)
+
+    print "learning ON"
+    client.write_register(300,1)
 
     # wait time
     time.sleep(1)
 
 def agv_niryo_service(req):
     if req.agv_command == 1:
-       niryo_move_world(0.22, 0, 0.3, 0, 0, 0)
+       print "learning off"
+       client.write_register(300,0)
+
+       niryo_move_world(0.22, 0, 0.2, 0, 0, 0)
        camera_capcture = 1
        print "Send command to camera"
        robot_from_camera(camera_capcture)
+
     elif req.agv_command == 2:
-       niryo_move_world(0.22, 0, 0.4, 0, 0, 0)
+       print "learning off"
+       client.write_register(300,0)
+
+       niryo_move_world(0.22, 0, 0.2, 0, 0, 0)
        camera_capcture = 2
        print "Send command to camera"
        robot_from_camera(camera_capcture)
-    else
+    else:
        camera_capcture = 0
        print "please check agv_command"
     return agv_niryoResponse(camera_capcture)
